@@ -14,7 +14,7 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 - the technique was developed to reduce costs and improve modularity, and although popular in the 1970s and 1980s, more modern computers use a variety of separate buses adapted to more specific needs.
 - is the fastest bus in the system.
 
-<p align="center"> 
+<p align="center">
     <img src="https://i.imgur.com/XoCAfrl.png" width="400px" height="auto">
 </p>
 
@@ -24,9 +24,9 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 - one very common bus of this type is known as the PCI bus.
 - these slower buses connect to the system bus through a bridge, which is a part of the computer's chipset and acts as a traffic cop, integrating the data from the other buses to the system bus.
 
-## Industry Standard Architecture (ISA) 
+## Industry Standard Architecture (ISA)
 
-- is the 16-bit internal bus of IBM PC/AT and similar computers based on the Intel 80286 and its immediate successors during the 1980s. 
+- is the 16-bit internal bus of IBM PC/AT and similar computers based on the Intel 80286 and its immediate successors during the 1980s.
 - the bus was (largely) backward compatible with the 8-bit bus of the 8088-based IBM PC, including the IBM PC/XT as well as IBM PC compatibles.
 - superseded by PCI and AGP.
 - speed: 8MB/s, up to 16 devices.
@@ -43,7 +43,7 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 
 ## Bridge
 
-- a PCI bridge is a hardware connection between two different buses. 
+- a PCI bridge is a hardware connection between two different buses.
 - the bridge may be PCI to PCI, PCI to ISA or some other kind of bus. Bus standards are limited by electrical characteristics. - adding devices called bridges allows the buses to be expanded.
 - a PCI bridge allows expansion of the PCI bus by adding more buses to the system.
 
@@ -55,21 +55,21 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 ## SMBus
 
 - __System Management Bus__ (SMBus or SMB) is a single-ended simple two-wire bus for the purpose of lightweight communication.
-- Most commonly it is found in computer motherboards for communication with the power source for ON/OFF instructions. 
+- Most commonly it is found in computer motherboards for communication with the power source for ON/OFF instructions.
 
 ## Chipset
 
 - is a set of (chips) electronic components in an integrated circuit known as a "Data Flow Management System" that manages the data flow between the processor, memory and peripherals.
 - usually designed to work with a specific family of microprocessors.
-- historically, chips (for keyboard controller, memory controller, ...) were scattered arround the motherboard. With time, engineers reduced the number of chips to the same job and condenced them to only a few chips or what is now called a __chipset__.
-- recently, the north bridge were built inside the CPU to maximize performance (1 jump instead of 2 from south bridge + performance sensitive devices talks directly to the CPU without the latency addded by north bridge) and the south bridge is called __Platform Controller Hub__.
+- historically, chips (for keyboard controller, memory controller, ...) were scattered around the motherboard. With time, engineers reduced the number of chips to the same job and condensed them to only a few chips or what is now called a __chipset__.
+- recently, the north bridge were built inside the CPU to maximize performance (1 jump instead of 2 from south bridge + performance sensitive devices talks directly to the CPU without the latency added by north bridge) and the south bridge is called __Platform Controller Hub__.
 
 ## Northbridge/Southbridge
 
 - __Northbridge__  or (host bridge) is the chip whose main role is to connect the CPU and the RAM memory. It also connects the CPU to the AGP and PCI Express slots. These are all processes which have to go really fast.
 - The __Southbridge__ is more relaxed and connects the CPU via the Northbridge to the I/O devices. E.g. ATA hard drives, USBs, standard PCI slots, sound and Ethernet. These connections (bridges) are actually very fast but by comparison with the CPU are they slow.
- 
-<p align="center"> 
+
+<p align="center">
   <img src="https://i.imgur.com/hBE3n10.png" width="300px" height="auto">
 </p>
 
@@ -97,7 +97,7 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 - **Video RAM (VRAM)** is a dual-ported variant of dynamic RAM (DRAM), which was once commonly used to store the [framebuffer](https://en.wikipedia.org/wiki/Framebuffer) in graphics adapters.
 - System RAM is great for loading and running programs, but when you need graphics power, VRAM is where it's at. This is the memory used to store image data that the computer displays; it acts as a buffer between the CPU and the video card. When a picture is to be displayed on the screen, the image is first read by the processor and then written to the VRAM.
 
-<p align="center"> 
+<p align="center">
     <img src="https://i.imgur.com/waiV3E0.png" width="600px" height="auto">
 </p>
 
@@ -114,7 +114,7 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 
 ## Programmable Interval Timer (PIT)
 
-- is a counter that generates an output signal when it reaches a programmed count. 
+- is a counter that generates an output signal when it reaches a programmed count.
 - The output signal may trigger an interrupt.
 - PITs may be one-shot or periodic.
 - One-shot timers will signal only once and then stop counting.
@@ -137,7 +137,7 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 
 - Is a special type of interrupt by which one processor may interrupt another processor in a multiprocessor system if the interrupting processor requires action from the other processor.
 - Actions that might be requested include:
-  - flushes of memory management unit caches, such as translation lookaside buffers, on other processors when memory mappings are changed by one processor
+  - flushes of memory management unit caches, such as translation look-aside buffers, on other processors when memory mappings are changed by one processor
   - stopping when the system is being shut down by one processor.
 
 ## E820
@@ -150,7 +150,7 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 - Bus snooping or bus sniffing is a scheme by which a coherency controller (snooper) in a cache monitors or snoops the bus transactions, and its goal is to maintain a cache coherency in distributed shared memory systems.
 - A cache containing a coherency controller (snooper) is called a snoopy cache.
 
-## Load-Store Architcture
+## Load-Store Architecture
 
 - is an ISA that divides instructions into two categories:
     - memory access (load and store between memory and registers)
@@ -188,9 +188,9 @@ This page contains basic concepts I stumbled upon during my journey on learning 
   - DDR2 allows for higher bus speeds, uses less power, and has more pins (240).
   - DDR3 is twice as fast as DDR2, also have 240 pins, bottom nutches are in different places
   - DDR4 uses less power than previous generation, have 288 pins, higher range of speed than DDR3
-- NVDIMM: A non-volatile dual in-line memory module (NVDIMM) 
+- NVDIMM: A non-volatile dual in-line memory module (NVDIMM)
   - is memory that retains its contents even when electrical power is removed, for example from an unexpected power loss, system crash, or normal shutdown.
-  - "Dual in-line" identifies the memory as using the DIMM package. NVDIMMs improve application performance and system crash recovery time. 
+  - "Dual in-line" identifies the memory as using the DIMM package. NVDIMMs improve application performance and system crash recovery time.
   - They enhance solid-state drive (SSD) endurance and reliability
 
 ## IDE vs SATA

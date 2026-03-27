@@ -694,7 +694,7 @@ the calling procedure.
 
 #### 32-BIT PAGING
 
-- 32-bit paging may map linear addresses to either 4-KByte pages or 4-MByte pages. 
+- 32-bit paging may map linear addresses to either 4-KByte pages or 4-MByte pages.
 <p align="center"> <img src="https://i.imgur.com/yk5DDik.png" width="500px" height="auto"></p>
 <p align="center"> <img src="https://i.imgur.com/graLHn1.png" width="500px" height="auto"></p>
 
@@ -753,7 +753,7 @@ the calling procedure.
 
 - To aid in handling exceptions and interrupts, each architecturally defined exception and each interrupt condition
 requiring special handling by the processor is assigned a unique identification number, called a **vector number**.
-- The processor uses the vector number assigned to an exception or interrupt as an **index** into the interrupt descriptor table (IDT). 
+- The processor uses the vector number assigned to an exception or interrupt as an **index** into the interrupt descriptor table (IDT).
 - The allowable range for vector numbers is **0 to 255**. Vector numbers in the range **0 through 31** are reserved by the Intel 64 and IA-32 architectures for architecture-defined exceptions and interrupts.
 - Vector numbers in the range **32 to 255** are designated as user-defined interrupts and are not reserved by the Intel 64 and IA-32 architecture. These interrupts are generally assigned to **external I/O devices** to enable those devices to send interrupts to the processor through one of the external hardware interrupt mechanisms .
 
@@ -841,18 +841,24 @@ returns an error code.
 
 Intel 64 and IA-32 processors may implement four types of caches: __the trace cache, the level 1 (L1) cache, the level 2 (L2) cache, and the level 3 (L3) cache__:
   - The L1 cache is divided into two sections: one section is dedicated to caching instructions (pre-decoded instructions) and the other caches data.
-  - The L2 cache is a unified data and instruction cache.
-  - Each processor core has its own L1 and L2.
-  - The L3 cache is an inclusive, unified data and instruction cache, shared by all processor cores inside a physical package. 
+  - The L2 cache is a unified data and instruction cache. Each processor core has its own L1 and L2.
+  - The L3 cache is an inclusive, unified data and instruction cache, shared by all processor cores inside a physical package.
   - No trace cache is implemented..
+- The **TLBs** store the **most recently used page-directory** and **page-table entries**. They speed up memory accesses
+when paging is enabled by reducing the number of memory accesses that are required to read the page tables stored in system memory.
+- The TLBs are divided into four groups:
+  - instruction TLBs for 4-KByte pages
+  - data TLBs for 4-KByte pages;
+  - instruction TLBs for large pages (2-MByte, 4-MByte or 1-GByte pages),
+  - and data TLBs for large pages.
 
 #### Page Attribute Table (PAT)
 
 - The **Page Attribute Table (PAT)** extends the IA-32 architecture’s page-table format to allow memory types to be
 assigned to regions of physical memory based on linear address mappings.
 - The PAT is a companion feature to the MTRRs; that is:
-  - MTRRs allow mapping of memory types to regions of the physical address space, 
-  - where the PAT allows mapping of memory types to pages within the linear address space. 
+  - MTRRs allow mapping of memory types to regions of the physical address space,
+  - where the PAT allows mapping of memory types to pages within the linear address space.
 
 ### Chapter 17 Debug, Branch Profile, TSC, and Intel® Resource Director Technology (Intel® RDT) Features
 
