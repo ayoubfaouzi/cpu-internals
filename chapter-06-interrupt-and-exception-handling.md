@@ -14,7 +14,7 @@
 - The allowable range for vector numbers is **0 to 255**. Vector numbers in the range **0 through 31** are reserved by the Intel 64 and IA-32 architectures for **architecture-defined** exceptions and interrupts.
 - Vector numbers in the range **32 to 255** are designated as **user-defined interrupts** and are not reserved by the Intel 64 and IA-32 architecture. These interrupts are generally assigned to **external I/O devices** to enable those devices to send interrupts to the processor through one of the external hardware interrupt mechanisms .
 
-<p align="center"><img src="./assets/exceptions-and-interrupts.png" width="400px" height="auto"></p>
+<p align="center"><img src="./assets/exceptions-and-interrupts.png" width="600px" height="auto"></p>
 
 ## Sources of Interrupts
 
@@ -33,6 +33,9 @@ The processor receives interrupts from two sources:
 **What INTR does (legacy mode)**
 
 When something asserts the INTR pin, the CPU knows an external maskable interrupt has occurred. But the CPU doesn't yet know *which* interrupt — INTR is just a "hey, something happened" signal. So the CPU then reads a vector number off the system bus, which is supplied by an external interrupt controller chip — classically the **8259A PIC**. That vector number (0–255) tells the CPU which entry in the IDT to jump to, which in turn tells it which handler routine to run.
+
+<p align="center"><img src="./assets/intel-8259A-irq-chip.jpeg" width="500px" height="auto"></p>
+<p align="center"><img src="./assets/intel_8259.svg" width="300px" height="auto"></p>
 
 "Maskable" means software can disable these interrupts when it doesn't want to be bothered (using the `CLI` instruction to clear the interrupt flag).
 
