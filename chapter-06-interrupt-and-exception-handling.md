@@ -32,7 +32,7 @@ The processor receives interrupts from two sources:
 
 **What INTR does (legacy mode)**
 
-When something asserts the INTR pin, the CPU knows an external maskable interrupt has occurred. But the CPU doesn't yet know *which* interrupt — INTR is just a "hey, something happened" signal. So the CPU then reads a vector number off the system bus, which is supplied by an external interrupt controller chip — classically the **8259A PIC**. That vector number (0–255) tells the CPU which entry in the IDT to jump to, which in turn tells it which handler routine to run.
+When something asserts the `INTR` pin, the CPU knows an **external maskable interrupt** has occurred. But the CPU doesn't yet know *which* interrupt — `INTR` is just a "hey, something happened" signal. So the CPU then reads a vector number off the system bus, which is supplied by an external interrupt controller chip — classically the **8259A PIC**. That vector number (0–255) tells the CPU which entry in the IDT to jump to, which in turn tells it which handler routine to run.
 
 <p align="center"><img src="./assets/intel-8259A-irq-chip.jpeg" width="500px" height="auto"></p>
 <p align="center"><img src="./assets/intel_8259.svg" width="300px" height="auto"></p>
@@ -45,12 +45,7 @@ The NMI pin signals a **Non-Maskable Interrupt**. As the name says, software *ca
 
 **The big picture**
 
-So you have a hierarchy: modern systems use the APIC for flexible, programmable routing of many interrupt sources (especially important for multiprocessor systems). But the hardware preserves backward compatibility: turn the APIC off and the same physical pins revert to the old INTR/NMI scheme that talks to an 8259-style controller, just like a 1980s PC.
-
-----
-
-
-This passage continues the interrupt discussion, expanding from a single CPU's view out to the whole system: how interrupts get routed across chips and between processors, plus some legacy and edge-case details.
+So you have a hierarchy: modern systems use the APIC for flexible, programmable routing of many interrupt sources (especially important for multiprocessor systems). But the hardware preserves backward compatibility: turn the APIC off and the same physical pins revert to the old `INTR/NMI` scheme that talks to an 8259-style controller, just like a 1980s PC.
 
 **The I/O APIC: the system-wide interrupt router**
 
@@ -60,18 +55,18 @@ When a device asserts an interrupt at one of the I/O APIC's input pins, the I/O 
 
 The transport medium for that message depends on the processor generation:
 
-- On Pentium 4, Core Duo, Core 2, Atom, and Xeon, the message travels over the regular **system bus** (front-side bus, or in newer chips, QuickPath/similar).
+- On Pentium 4, Core Duo, Core 2, Atom, and Xeon, the message travels over the regular **system bus** (front-side bus, or in newer chips, *QuickPath*/similar).
 - On older P6 family and Pentium chips, there's a dedicated **APIC serial bus** — three wires used solely for APIC traffic.
 
 Either way, the key point is that the I/O APIC decides the vector number and tells the local APIC, "deliver vector N to your CPU."
 
 **Inter-processor interrupts (IPIs)**
 
-In a multiprocessor system, CPUs sometimes need to interrupt *each other* — for example, to flush another CPU's TLB, halt it, or wake it up. This is called an **inter-processor interrupt (IPI)**. One CPU's local APIC sends a message directly to another CPU's local APIC over the same bus (system bus or APIC serial bus, depending on the generation). No I/O APIC involved — it's APIC-to-APIC.
+In a multiprocessor system, CPUs sometimes need to interrupt *each other* — for example, to flush another CPU's TLB, halt it, or wake it up. This is called an **inter-processor interrupt (IPI)**. One CPU's local APIC sends a message directly to another CPU's local APIC over the same bus (system bus or APIC serial bus, depending on the generation). No I/O APIC involved — it's **APIC-to-APIC**.
 
 **The legacy case: pre-APIC processors**
 
-The Intel486 and earlier Pentium processors didn't have on-chip local APICs at all, and so they don't have LINT0/LINT1. Instead, they have dedicated, single-purpose **INTR** and **NMI** pins. External interrupts on these systems come from an off-chip **8259A** controller wired to the INTR pin — the classic PC architecture from the 1980s. This is the simpler world that the LINT-pins-in-disabled-APIC-mode was emulating in the previous passage.
+The Intel486 and earlier Pentium processors didn't have on-chip local APICs at all, and so they don't have `LINT0/LINT1`. Instead, they have dedicated, single-purpose **INTR** and **NMI** pins. External interrupts on these systems come from an off-chip **8259A** controller wired to the INTR pin — the classic PC architecture from the 1980s.
 
 **Other pins that interrupt the processor (but aren't "interrupts" in this chapter's sense)**
 
@@ -95,20 +90,17 @@ Putting both passages together, the picture is:
 - In legacy mode (no APIC), it's just: device → **8259A** → INTR pin → CPU.
 - And there are several special control pins (RESET#, SMI#, etc.) that cause CPU disturbances but live outside the normal interrupt-vector machinery.
 
-Want me to dig into how the I/O APIC's redirection table works, what an IPI looks like in practice, or what SMM actually does?
-
 ### Maskable Hardware Interrupts
 
-- Any external interrupt that is delivered to the processor by means of the INTR pin or through the local APIC is called a **maskable hardware interrupt**.
-- The IF flag in the EFLAGS register permits all maskable hardware interrupts to be masked as a group.
+- Any external interrupt that is delivered to the processor by means of the `INTR` pin or through the local APIC is called a **maskable hardware interrupt**.
+- The `IF` flag in the `EFLAGS` register permits all maskable hardware interrupts to be masked as a group.
 
 ### Software-Generated Interrupts
 
 - The **INT n** instruction permits interrupts to be generated from within software by supplying an interrupt vector number as an operand.
 - Any of the interrupt vectors from 0 to 255 can be used as a parameter in this instruction.
-- If the processor’s predefined NMI vector is used, however, the response of the processor will not be the same as it would be from an NMI interrupt generated in the normal manner
-- Interrupts generated in software with the INT n instruction cannot be masked by the IF flag in the EFLAGS register.
-
+- If the processor’s predefined NMI vector is used (vector 2), however, the response of the processor will not be the same as it would be from an NMI interrupt generated in the normal manner.
+- Interrupts generated in software with the `INT n` instruction cannot be masked by the IF flag in the EFLAGS register.
 
 ## Sources of Exceptions
 
