@@ -4,7 +4,7 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 
 ## Bus
 
-- a communication system that transfers data between components inside a computer, or between computers. 
+- a communication system that transfers data between components inside a computer, or between computers.
 - the graphics card talks to the processor using the computer's bus as a communication path.
 - the advantage of a bus is that it makes parts more interchangeable.
 
@@ -54,20 +54,20 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 
 ## SMBus
 
-- __System Management Bus__ (SMBus or SMB) is a single-ended simple two-wire bus for the purpose of lightweight communication.
+- **System Management Bus** (SMBus or SMB) is a single-ended simple two-wire bus for the purpose of lightweight communication.
 - Most commonly it is found in computer motherboards for communication with the power source for ON/OFF instructions.
 
 ## Chipset
 
 - is a set of (chips) electronic components in an integrated circuit known as a "Data Flow Management System" that manages the data flow between the processor, memory and peripherals.
 - usually designed to work with a specific family of microprocessors.
-- historically, chips (for keyboard controller, memory controller, ...) were scattered around the motherboard. With time, engineers reduced the number of chips to the same job and condensed them to only a few chips or what is now called a __chipset__.
-- recently, the north bridge were built inside the CPU to maximize performance (1 jump instead of 2 from south bridge + performance sensitive devices talks directly to the CPU without the latency added by north bridge) and the south bridge is called __Platform Controller Hub__.
+- historically, chips (for keyboard controller, memory controller, ...) were scattered around the motherboard. With time, engineers reduced the number of chips to the same job and condensed them to only a few chips or what is now called a **chipset**.
+- recently, the north bridge were built inside the CPU to maximize performance (1 jump instead of 2 from south bridge + performance sensitive devices talks directly to the CPU without the latency added by north bridge) and the south bridge is called **Platform Controller Hub**.
 
 ## Northbridge/Southbridge
 
-- __Northbridge__  or (host bridge) is the chip whose main role is to connect the CPU and the RAM memory. It also connects the CPU to the AGP and PCI Express slots. These are all processes which have to go really fast.
-- The __Southbridge__ is more relaxed and connects the CPU via the Northbridge to the I/O devices. E.g. ATA hard drives, USBs, standard PCI slots, sound and Ethernet. These connections (bridges) are actually very fast but by comparison with the CPU are they slow.
+- **Northbridge** or (host bridge) is the chip whose main role is to connect the CPU and the RAM memory. It also connects the CPU to the AGP and PCI Express slots. These are all processes which have to go really fast.
+- The **Southbridge** is more relaxed and connects the CPU via the Northbridge to the I/O devices. E.g. ATA hard drives, USBs, standard PCI slots, sound and Ethernet. These connections (bridges) are actually very fast but by comparison with the CPU are they slow.
 
 <p align="center">
   <img src="https://i.imgur.com/hBE3n10.png" width="300px" height="auto">
@@ -153,17 +153,17 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 ## Load-Store Architecture
 
 - is an ISA that divides instructions into two categories:
-    - memory access (load and store between memory and registers)
-    - and ALU operations (which only occur between registers).
+  - memory access (load and store between memory and registers)
+  - and ALU operations (which only occur between registers).
 - RISC ISAs such as PowerPC, SPARC, RISC-V, ARM, and MIPS are load–store architectures.
 - For instance, in a load–store approach both operands and destination for an ADD operation must be in registers. This differs from a register–memory architecture (for example, a CISC instruction set architecture such as x86) in which one of the operands for the ADD operation may be in memory, while the other is in a register.
 
 ## Memory Controller
 
 - is a digital circuit that manages the flow of data going to and from the computer's main memory.
-- is sometimes also called a __memory chip controller (MCC)__ or a __memory controller unit (MCU)__.
-- can be a __separate__ chip or __integrated__ into another chip, such as being placed on the same die or as an integral part of a microprocessor.
-- in the latter case, it is usually called an __integrated memory controller (IMC)__.
+- is sometimes also called a **memory chip controller (MCC)** or a **memory controller unit (MCU)**.
+- can be a **separate** chip or **integrated** into another chip, such as being placed on the same die or as an integral part of a microprocessor.
+- in the latter case, it is usually called an **integrated memory controller (IMC)**.
 - most modern desktop or workstation microprocessors use an integrated memory controller (IMC), including microprocessors from Intel, AMD, and those built around the ARM architecture.
 - one of the downfalls to RAM is that it must be supplied with a constant flow of power in order to operate. As soon as the influx of power stops, the information stored in RAM chips is lost. The memory controller fulfills this need by "refreshing" the RAM at a constant rate while the computer is powered on.
 
@@ -204,7 +204,45 @@ This page contains basic concepts I stumbled upon during my journey on learning 
 ## SCSI
 
 - is a set of standards for physically connecting and transferring data between computers and peripheral devices. The SCSI standards define commands, protocols, electrical, optical and logical interfaces.
-- SCSI drives will be more __reliable__ simple because they are built better.
-- They are designed and priced to be put into __high end machines__ - primarily servers where they will get a lot of abuse and quite possibly run 24/7/365 for 5-7 years.
-- They are made of higher quality parts, etc. SATA drives are __consumer grade__ drives. They are made as cheaply as possible and are not designed with the kind of workloads Servers typically do in mind.
+- SCSI drives will be more **reliable** simple because they are built better.
+- They are designed and priced to be put into **high end machines** - primarily servers where they will get a lot of abuse and quite possibly run 24/7/365 for 5-7 years.
+- They are made of higher quality parts, etc. SATA drives are **consumer grade** drives. They are made as cheaply as possible and are not designed with the kind of workloads Servers typically do in mind.
 - As far as speed, you will actually see a fairly big difference in speed just do to the spindle speeds of the SCSI devices being so much higher. You're talking 7200 RPM vs 15k RPM on the high ends of both devices. The faster spindle speed, gives you lower latency and higher access speeds.
+
+## Device Registers
+
+- **Device registers** are small storage locations inside a hardware device that software reads and writes to control the device and learn its state. They are the device's control panel: the driver never reaches into the device's internals, it only touches the registers.
+- Registers usually fall into a few kinds:
+  - **Control registers:** the driver writes here to tell the device what to do (for example "enable yourself", "start transmitting", "reset").
+  - **Status registers:** the driver reads here to find out what is going on (for example "I'm busy", "data is ready", "an error occurred").
+  - **Data registers:** used to pass actual data in or out, such as a byte to send over a serial port.
+  - **Configuration registers:** describe or set up the device (for example its type, its capabilities, a network card's MAC address).
+- Unlike CPU registers, which live inside the processor, device registers live in the device and are accessed through an address.
+  - **Memory-mapped I/O (MMIO):** the registers are assigned addresses in the same address space as ordinary memory. Writing to address `0x10001000` doesn't store anything in RAM; it goes to the device.
+  - **Port I/O:** an older x86 mechanism in which registers sit in a separate address space and are accessed with special CPU instructions (`in` and `out`).
+
+**An example.** A simple serial port might have:
+
+| Address offset | Register | Meaning                         |
+| -------------- | -------- | ------------------------------- |
+| 0x00           | Data     | Write a byte here to send it    |
+| 0x04           | Status   | Bit 0 = 1 means "ready to send" |
+| 0x08           | Control  | Write 1 to enable the port      |
+
+To send a character, the driver writes 1 to Control, reads Status until the ready bit is set, then writes the character to Data.
+
+**In virtio.** A virtio device exposes registers such as the device ID (is this a network card or a disk?), feature bits (what the device supports), a status register (how far the driver has got in initializing it), and a "notify" register the driver writes to in order to say "I've queued new work for you." With the MMIO transport these sit at the predefined memory address the passage mentions; with PCI, the guest finds their location by scanning the bus.
+
+For a purely virtual device there is no actual hardware behind those addresses. When the guest reads or writes one, the hypervisor intercepts the access and responds in software as a real device would.
+
+## PCI Bus Discovery
+
+- **The guest firmware** (for example SeaBIOS or OVMF/UEFI) runs first at boot. It scans the PCI bus, assigns address ranges to each device, and finds a device to boot from.
+- **The guest kernel's PCI subsystem** then does its own scan when the OS starts.
+- Every PCI device has a standard block of registers called the **configuration space**, and the first fields in it are the **Vendor ID** and **Device ID**. The kernel walks through every possible slot (bus number, device number, function number) and reads the Vendor ID at each one:
+  - If it reads back `0xFFFF`, the slot is empty and the kernel moves on.
+  - Otherwise there is a device, and the kernel reads the Device ID and the rest of the configuration.
+- In a VM there is no real PCI bus. When the guest reads a configuration register, the **hypervisor** intercepts the access and returns the values a real device would. 
+- Virtio devices use vendor ID `0x1AF4` (registered to Red Hat) and device IDs in the range `0x1000`–`0x107F`. Each kernel driver declares the IDs it supports, and the PCI subsystem matches what it found against those lists. For virtio this happens in two steps:
+  1. The generic `virtio-pci` driver claims any device with the virtio vendor ID.
+  2. That driver then works out which kind of virtio device it is (network, block, console, and so on), and the matching specific driver, such as `virtio-net` or `virtio-blk`, takes over.
